@@ -63,7 +63,7 @@ namespace IS_1_19_SharafullinAA
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) 
         {
             CP sot = new CP(6, 6, 29, 2018, 11000);
             sot.Info(listBox1);
