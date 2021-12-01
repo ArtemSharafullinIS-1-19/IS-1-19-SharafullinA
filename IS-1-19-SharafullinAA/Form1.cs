@@ -50,7 +50,7 @@ namespace IS_1_19_SharafullinAA
 
             public override void Display(ListBox listBox1)
             {
-                listBox1.Items.Add($"Цена - {stoimost}, Год выпуска - {god}, Арктикул - {artikul}, частота - {chastota}, Число ядер - {yadro}, Число потоков - {potoki}");
+                listBox1.Items.Add($"Цена - {stoimost}, Год выпуска - {god}, Арктикул - {artikul}, Частота - {chastota}, Число ядер - {yadro}, Число потоков - {potoki}");
             }
         }
         class Videokartachka : Komplektaciya<string>
@@ -71,7 +71,7 @@ namespace IS_1_19_SharafullinAA
 
             public override void Display(ListBox listBox1)
             {
-             listBox1.Items.Add($"Цена: {stoimost}, год Выпуска: {god}, арктикул: {artikul}, частота GPU: {chastota}, производитель: {firma}, объём Памяти {pamyat}");
+             listBox1.Items.Add($"Цена: {stoimost}, Год выпуска: {god}, Арктикул: {artikul}, частота GPU: {chastota}, Производитель: {firma}, Объём Памяти {pamyat}");
 
             }
         }
@@ -110,7 +110,7 @@ namespace IS_1_19_SharafullinAA
         }
         private void textBox2_Click(object sender, EventArgs e)
         {
-            if (textBox2.Text == "Год Выпуска")
+            if (textBox2.Text == "Год выпуска")
                 textBox2.Text = "";
         }
         private void textBox3_Click(object sender, EventArgs e)
@@ -120,12 +120,12 @@ namespace IS_1_19_SharafullinAA
         }
         private void textBox4_Click(object sender, EventArgs e)
         {
-            if (textBox4.Text == "Количество ядер")
+            if (textBox4.Text == "Число ядер")
                 textBox4.Text = "";
         }
         private void textBox5_Click(object sender, EventArgs e)
         {
-            if (textBox5.Text == "Количество потоков")
+            if (textBox5.Text == "Число потоков")
                 textBox5.Text = "";
         }
         private void textBox6_Click(object sender, EventArgs e)
@@ -135,7 +135,7 @@ namespace IS_1_19_SharafullinAA
         }
         private void textBox7_Click(object sender, EventArgs e)
         {
-            if (textBox7.Text == "Производитель")
+            if (textBox7.Text == "Фирма")
                 textBox7.Text = "";
         }
         private void textBox8_Click(object sender, EventArgs e)
