@@ -17,7 +17,7 @@ namespace Задание_2
         {
             InitializeComponent();
         }
-         class MySql
+         class MySqlConnect
         {
 
             public MySqlConnection ConnDB()
@@ -42,7 +42,7 @@ namespace Задание_2
 
             private void button1_Click(object sender, EventArgs e)
             {
-                MySqlConnection conec = new MySqlConnection(MySql.SqlConnect());
+                MySqlConnection conec = new MySqlConnection(MySqlConnect.SqlConnect());
                 try
                 {
                     conec.Open();
