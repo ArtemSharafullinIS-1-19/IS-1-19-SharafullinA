@@ -33,7 +33,7 @@ namespace Задание_2
             public static string password = "test_pass";
 
 
-            public static string sqlconn()
+            public static string SqlConnect()
                 {
                     string conn = $"server={host};port={port};user={user_id};database={database};password={password}";
                     return conn;
@@ -42,7 +42,7 @@ namespace Задание_2
 
             private void button1_Click(object sender, EventArgs e)
             {
-                MySqlConnection conec = new MySqlConnection(MySql.sqlconn());
+                MySqlConnection conec = new MySqlConnection(MySql.SqlConnect());
                 try
                 {
                     conec.Open();
