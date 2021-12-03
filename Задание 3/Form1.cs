@@ -21,7 +21,7 @@ namespace Задание_3
         {
             public MySqlConnection ConnBaz()
             {
-                //Создание строки подключения
+                
                 string port = "33333";
                 string host = "caseum.ru";
                 string user = "test_user";
@@ -29,12 +29,12 @@ namespace Задание_3
                 string db = "db_test";
                 string connStr = $"server={host};port={port};user={user};database={db};password={password};";
                 MySqlConnection conn = new MySqlConnection(connStr);
-                return conn; //Возврат строки подключения
+                return conn; 
             }
         }
-        private BindingSource bSource = new BindingSource(); //Унифицированный доступ к источнику данных          
+        private BindingSource bSource = new BindingSource();         
         private DataTable table = new DataTable();
-        private MySqlDataAdapter adapter = new MySqlDataAdapter(); //Получение данных из источника
+        private MySqlDataAdapter adapter = new MySqlDataAdapter();
 
         private void button1_Click(object sender, EventArgs e)
         {
