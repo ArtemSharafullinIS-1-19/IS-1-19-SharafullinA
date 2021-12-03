@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace Задние_3
 {
@@ -38,13 +31,13 @@ namespace Задние_3
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    
+
                     string id_prepods = reader[0].ToString();
                     string name_prepods = reader[1].ToString();
                     string dolg_prepods = reader[2].ToString();
                     lv.Items.Add($"{id_prepods}) {name_prepods} - {dolg_prepods}");
                 }
-               
+
                 reader.Close();
                 conn.Close();
             }
@@ -56,7 +49,7 @@ namespace Задние_3
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+
             MySqlConnection cnt = DBUtils.GetDBConnection();
             GetData.SelectStudents(listBox1, cnt);
         }
