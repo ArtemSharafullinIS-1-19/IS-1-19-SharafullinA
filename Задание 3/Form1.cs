@@ -17,44 +17,62 @@ namespace Задание_3
         {
             InitializeComponent();
         }
-        MySqlConnection conn;
-
-        string connStr = "server=caseum.ru;port=33333;user=test_user;database=db_test;password=test_pass;";
-        private MySqlDataAdapter MyDA = new MySqlDataAdapter();
-        private BindingSource bSource = new BindingSource();
-        private DataSet ds = new DataSet();
-        private DataTable table = new DataTable();
-
-        public async void GetListUsers()
+        class ConnBaza
         {
-            int x = 0;
-            while (x != 1000000)
+            public MySqlConnection ConnBaz()
             {
-                table.Clear();
-                x++;
-                string commandStr = "SELECT id AS 'Код', fio AS 'ФИО', " +
-                    "theme_kurs AS 'Тема курсовой' FROM t_stud";
-                conn.Open();
-                MyDA.SelectCommand = new MySqlCommand(commandStr, conn);
-                MyDA.Fill(table);
-                bSource.DataSource = table;
-                dataGridView1.DataSource = bSource;
-                conn.Close();
-                await Task.Delay(1500);
+                //Создание строки подключения
+                string port = "33333";
+                string host = "caseum.ru";
+                string user = "test_user";
+                string password = "test_pass";
+                string db = "db_test";
+                string connStr = $"server={host};port={port};user={user};database={db};password={password};";
+                MySqlConnection conn = new MySqlConnection(connStr);
+                return conn; //Возврат строки подключения
             }
-
         }
+        private BindingSource bSource = new BindingSource(); //Унифицированный доступ к источнику данных          
+        private DataTable table = new DataTable();
+        private MySqlDataAdapter adapter = new MySqlDataAdapter(); //Получение данных из источника
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            conn = new MySqlConnection(connStr);
-            GetListUsers();
+            ConnBaza conbaza = new ConnBaza();
+            try
+            {
+                conbaza.ConnBaz().Open();
+                string ConnSTR = "SELECT id AS 'ID', fio AS 'ФИО', theme_kurs AS 'Тема' FROM t_stud";
+                MySqlDataAdapter adapter = new MySqlDataAdapter(ConnSTR, conbaza.ConnBaz());
+                dataGridView1.Rows.Clear();
+                dataGridView1.Rows.Clear();
+                dataGridView1.Rows.Clear();
+            }
+            catch (Exception oshibka)
+            {
+                MessageBox.Show($"{oshibka}");
+            }
+            finally
+            {
+                MessageBox.Show("Вы успешно подключились к базе данных!");
+                conbaza.ConnBaz().Close();
+            }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            MessageBox.Show(dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString(), "ФИО студента", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                MessageBox.Show(dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString());
+            }
+            catch
+            {
+            }
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
