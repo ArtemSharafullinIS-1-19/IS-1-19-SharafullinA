@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using static Задание_3.Program;
 
 namespace Задание_3
 {
@@ -17,36 +18,39 @@ namespace Задание_3
         {
             InitializeComponent();
         }
-        class ConnBaza
-        {
-            public MySqlConnection ConnBaz()
-            {
-                
-                string port = "33333";
-                string host = "caseum.ru";
-                string user = "test_user";
-                string password = "test_pass";
-                string db = "db_test";
-                string connStr = $"server={host};port={port};user={user};database={db};password={password};";
-                MySqlConnection conn = new MySqlConnection(connStr);
-                return conn; 
-            }
-        }
-        private BindingSource bSource = new BindingSource();         
+        MySqlConnection conn;
+        string connStr = "server=caseum.ru;port=33333;user=test_user;database=db_test;password=test_pass;";
+        //DataAdapter представляет собой объект Command , получающий данные из источника данных.
+        private MySqlDataAdapter MyDA = new MySqlDataAdapter();
+        //Объявление BindingSource, основная его задача, это обеспечить унифицированный доступ к источнику данных.
+        private BindingSource bSource = new BindingSource();
+        //DataSet - расположенное в оперативной памяти представление данных, обеспечивающее согласованную реляционную программную 
+        //модель независимо от источника данных.DataSet представляет полный набор данных, включая таблицы, содержащие, упорядочивающие 
+        //и ограничивающие данные, а также связи между таблицами.
+        private DataSet ds = new DataSet();
+        //Представляет одну таблицу данных в памяти.
         private DataTable table = new DataTable();
-        private MySqlDataAdapter adapter = new MySqlDataAdapter();
+        //что бы в БД не отправлялся null
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ConnBaza conbaza = new ConnBaza();
+            
             try
             {
-                conbaza.ConnBaz().Open();
-                string ConnSTR = "SELECT id AS 'ID', fio AS 'ФИО', theme_kurs AS 'Тема' FROM t_stud";
-                MySqlDataAdapter adapter = new MySqlDataAdapter(ConnSTR, conbaza.ConnBaz());
-                dataGridView1.Rows.Clear();
-                dataGridView1.Rows.Clear();
-                dataGridView1.Rows.Clear();
+                string commandStr = "SELECT id AS 'Код', fio AS 'ФИО', " +
+                                       "theme_kurs AS 'Тема курсовой' FROM t_stud";
+                //Открываем соединение
+                conn.Open();
+                //Объявляем команду, которая выполнить запрос в соединении conn
+                MyDA.SelectCommand = new MySqlCommand(commandStr, conn);
+                //Заполняем таблицу записями из БД
+                MyDA.Fill(table);
+                //Указываем, что источником данных в bindingsource является заполненная выше таблица
+                bSource.DataSource = table;
+                //Указываем, что источником данных ДатаГрида является bindingsource 
+                dataGridView1.DataSource = bSource;
+                //Закрываем соединение
+                conn.Close();
             }
             catch (Exception oshibka)
             {
@@ -55,7 +59,7 @@ namespace Задание_3
             finally
             {
                 MessageBox.Show("Вы успешно подключились к базе данных!");
-                conbaza.ConnBaz().Close();
+                conn.Close();
             }
         }
 
@@ -72,7 +76,7 @@ namespace Задание_3
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            conn = new MySqlConnection(connStr);
         }
     }
 }
